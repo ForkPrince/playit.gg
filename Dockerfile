@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN chmod +x ./playit-linux-amd64
-RUN chmod +x ./setup.sh
+RUN chmod +x /app/playit-linux-amd64
+RUN chmod +x /app/setup.sh
 
-CMD ["/bin/sh", "./setup.sh"]
+CMD ["/bin/sh", "/app/setup.sh"]
