@@ -8,6 +8,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN chmod +x ./agent
+RUN chmod +x ./playit-linux-amd64
 
-CMD ["./agent", "-c" ,"/app/config.toml", "--stdout-logs"]
+CMD ["./playit-linux-amd64", "-c" ,"/app/config.toml", "--stdout-logs"]
