@@ -11,4 +11,4 @@ COPY . .
 RUN chmod +x ./playit-linux-amd64
 RUN chmod +x ./setup.sh
 
-CMD ["./setup.sh"]
+CMD ["bash", "./setup.sh"]
