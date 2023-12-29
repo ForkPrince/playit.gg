@@ -9,6 +9,5 @@ WORKDIR /app
 COPY . .
 
 RUN chmod +x /app/playit-linux-amd64
-RUN chmod +x /app/setup.sh
 
-CMD ["/bin/sh", "/app/setup.sh"]
+CMD ["./playit-linux-amd64", "-s", "--secret_path", "./config/config.toml"]
