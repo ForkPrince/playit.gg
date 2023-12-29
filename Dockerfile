@@ -10,4 +10,4 @@ COPY . .
 
 RUN chmod +x ./playit-linux-amd64
 
-CMD ["./playit-linux-amd64", "-c" ,"/app/config.toml", "--stdout-logs"]
+CMD ["./setup.sh"]
