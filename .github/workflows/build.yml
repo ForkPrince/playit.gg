@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download Agent
-        run: curl -O -L agent https://github.com/playit-cloud/playit-agent/releases/download/v${{ inputs.version_tag }}/playit-linux-amd64
+        run: wget https://github.com/playit-cloud/playit-agent/releases/download/v${{ inputs.version_tag }}/playit-linux-amd64
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
