@@ -21,7 +21,7 @@ jobs:
       id-token: write
 
     steps:
-      - name: Clone upstream
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Download Agent
@@ -50,24 +50,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Convert repository name to lowercase
-        id: lowercase-repo
-        run: |
-          echo "::set-output name=lowercase_repo::$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')"
-
-      - name: Set lowercase repository name
-        run: |
-          echo "LOWER_REPO=${{ steps.lowercase-repo.outputs.lowercase_repo }}" >> $GITHUB_ENV
-
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: docker/Dockerfile
-          build-args: with_models=true
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.LOWER_REPO }}:${{ inputs.version_tag }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -76,4 +65,5 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         env:
           COSIGN_EXPERIMENTAL: "true"
+
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
